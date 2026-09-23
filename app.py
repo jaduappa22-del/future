@@ -6,56 +6,70 @@ from google.genai import types
 # 페이지 설정
 st.set_page_config(
     page_title="2036 타임리프: 10년 뒤의 나",
-    page_icon="⏳",
+    page_icon="🌿",
     layout="centered",
 )
 
-# 🎨 [와 소리 나는 미래지향적 커스텀 CSS 디자인 적용]
+# 🍃 [지브리 감성 스튜디오 스타일 커스텀 CSS 디자인]
 st.markdown(
     """
     <style>
-    /* 전체 배경: 깊은 우주 같은 그라데이션 */
+    /* 전체 배경: 따뜻하고 부드러운 크림/베이지 톤 */
     .stApp {
-        background: linear-gradient(135deg, #090d16 0%, #111c3a 50%, #1a103c 100%);
-        color: #f8fafc;
+        background: linear-gradient(180deg, #fefae0 0%, #faedcd 100%);
+        color: #283618;
+        font-family: 'Malgun Gothic', sans-serif;
     }
     
-    /* 메인 타이틀: 네온 그라데이션 효과 */
+    /* 메인 타이틀: 싱그러운 초록빛과 따뜻한 감성 */
     h1 {
-        font-family: 'Segoe UI', -apple-system, sans-serif;
-        background: linear-gradient(90deg, #38bdf8, #818cf8, #e879f9);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-weight: 900;
+        font-family: 'Malgun Gothic', sans-serif;
+        color: #283618;
         text-align: center;
-        font-size: 2.8rem !important;
-        letter-spacing: -0.02em;
-        text-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+        font-weight: 800;
+        font-size: 2.5rem !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
     }
     
     /* 서브 캡션 스타일 */
     .stCaption {
         text-align: center;
-        color: #94a3b8 !important;
+        color: #606c38 !important;
         font-size: 1.1rem !important;
-        margin-bottom: 2.5rem;
-        letter-spacing: 0.05em;
+        margin-bottom: 2rem;
+        font-weight: 600;
     }
 
-    /* 채팅 입력창 글래스모피즘 디자인 */
-    .stChatInputContainer {
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        background-color: rgba(15, 23, 42, 0.8) !important;
-        backdrop-filter: blur(10px);
+    /* 채팅 입력창 텍스트가 잘 보이도록 수정 (핵심 해결!) */
+    .stChatInput input {
+        color: #283618 !important;
+        background-color: #ffffff !important;
+        border-radius: 12px !important;
+        border: 2px solid #dda15e !important;
     }
     
-    /* 스피너 및 경고창 세련되게 변형 */
+    /* 사용자 채팅 말풍선: 따뜻한 우드/베이지 톤 */
+    div[data-testid="stChatMessage"]:nth-child(odd) {
+        background-color: #faedcd;
+        border-radius: 15px;
+        padding: 10px;
+        border: 1px solid #dda15e;
+    }
+
+    /* AI(미래의 나) 채팅 말풍선: 싱그러운 숲속 톤 */
+    div[data-testid="stChatMessage"]:nth-child(even) {
+        background-color: #e9edc9;
+        border-radius: 15px;
+        padding: 10px;
+        border: 1px solid #ccd5ae;
+    }
+
+    /* 알림/에러 박스 디자인 */
     div.stAlert {
-        background-color: rgba(30, 41, 59, 0.8);
-        border: 1px solid rgba(56, 189, 248, 0.3);
-        color: #e2e8f0;
+        background-color: #fefae0;
+        border: 1px solid #dda15e;
+        color: #283618;
         border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     }
     </style>
     """,
@@ -63,9 +77,9 @@ st.markdown(
 )
 
 # 타이틀 및 헤더
-st.title("⏳ 2036 TIME LEAP")
+st.title("🌿 2036년의 초원에서 온 편지")
 st.caption(
-    "✨ 10년 뒤 산전수전 다 겪은 미래의 내가 건네는 현실적인 조언과 위로"
+    "🍃 바람결에 실려 온 10년 뒤의 나이브한 잔소리와 따뜻한 위로"
 )
 
 # 🔒 Streamlit Secrets에서 안전하게 API Key 불러오기
@@ -103,10 +117,8 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# 사용자 입력 받기
-if prompt := st.chat_input(
-    "미래의 나에게 털어놓고 싶은 고민을 입력하세요..."
-):
+# 사용자 입력 받기 (글씨가 잘 보이도록 수정됨)
+if prompt := st.chat_input("오늘 어떤 마음으로 하루를 보내셨나요? 편하게 적어보세요."):
     # 사용자 메시지 추가
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
@@ -114,7 +126,7 @@ if prompt := st.chat_input(
 
     # AI 응답 생성
     with st.chat_message("assistant"):
-        with st.spinner("⏳ 2036년 타임라인에서 기억을 불러오는 중..."):
+        with st.spinner("🍃 10년 뒤의 초원에서 답장을 적는 중..."):
             try:
                 # 대화 히스토리 구성
                 contents = []
@@ -127,7 +139,7 @@ if prompt := st.chat_input(
                         )
                     )
 
-                # API 호출 (최신 gemini-3.6-flash 모델 적용)
+                # API 호출
                 response = client.models.generate_content(
                     model="gemini-3.6-flash",
                     contents=contents,

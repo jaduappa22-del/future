@@ -11,28 +11,21 @@ st.set_page_config(
 )
 
 st.title("⏳ 2036 타임리프: 10년 뒤의 나")
-st.caption("10년 뒤 산전수전 다 겪은 미래의 내가 뼈 때리는 조언과 위로를 건네줍니다.")
+st.caption(
+    "10년 뒤 산전수전 다 겪은 미래의 내가 뼈 때리는 조언과 위로를 건네줍니다."
+)
 
-# 사이드바 설정 (API Key 입력 받기)
-with st.sidebar:
-    st.header("설정")
-    api_key_input = st.text_input(
-        "Gemini API Key",
-        type="password",
-        help="Google AI Studio에서 발급받은 API 키를 입력하세요.",
+# 🔒 [보안 적용] Streamlit의 안전한 비밀 금고(Secrets)에서 API Key를 불러옵니다.
+try:
+    API_KEY = st.secrets["GEMINI_API_KEY"]
+except Exception:
+    st.error(
+        "🚨 Streamlit Secrets에 'GEMINI_API_KEY'가 설정되어 있지 않습니다! Streamlit Cloud 설정(Settings -> Secrets)에서 API 키를 등록해 주세요."
     )
-    st.markdown("---")
-    st.markdown(
-        "💡 **팁:** API Key는 [Google AI Studio](https://aistudio.google.com/)에서 무료로 발급받을 수 있습니다."
-    )
-
-# API Key 검증
-if not api_key_input:
-    st.warning("👈 사이드바에 Google Gemini API Key를 먼저 입력해 주세요!")
     st.stop()
 
 # GenAI 클라이언트 초기화
-client = genai.Client(api_key=api_key_input)
+client = genai.Client(api_key=API_KEY)
 
 # 시스템 지시어 (페르소나 설정)
 system_instruction = """
@@ -79,9 +72,9 @@ if prompt := st.chat_input("요즘 어떤 고민이 있어? 편하게 털어놔�
                         )
                     )
 
-                # 최신 SDK 방식으로 API 호출 (모델명 gemini-3.6-flash 적용)
+                # API 호출 (안정적인 플래시 모델 사용)
                 response = client.models.generate_content(
-                    model="gemini-3.6-flash",
+                    model="gemini-2.5-flash",
                     contents=contents,
                     config=types.GenerateContentConfig(
                         system_instruction=system_instruction,
@@ -99,5 +92,5 @@ if prompt := st.chat_input("요즘 어떤 고민이 있어? 편하게 털어놔�
 
             except Exception as e:
                 st.error(
-                    f"오류가 발생했습니다. API Key나 네트워크 상태를 확인해주세요. (에러: {e})"
+                    f"일시적인 서버 혼잡이 발생했습니다. 잠시 뒤에 다시 입력해 주세요! (에러: {e})"
                 )

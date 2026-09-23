@@ -10,95 +10,7 @@ st.set_page_config(
     layout="centered",
 )
 
-# 🌿 [지브리 다이어리 감성 디자인 (코드 노출 방지 깔끔 정리)]
-st.markdown(
-    """
-    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-    /* 전체 배경: 포근하고 따뜻한 크림/연두 다이어리 톤 */
-    .stApp {
-        background: linear-gradient(135deg, #fefae0 0%, #faedcd 50%, #e9edc9 100%);
-        color: #283618;
-    }
-    
-    /* 폰트 전체 적용 및 큼직하게 손글씨 느낌 살리기 */
-    html, body, [class*="css"], input, textarea, p, span {
-        font-family: 'Gaegu', cursive, sans-serif !important;
-        font-size: 22px !important;
-    }
-    
-    /* 메인 타이틀: 몽글몽글한 입체 효과 */
-    h1 {
-        font-family: 'Gaegu', cursive, sans-serif !important;
-        color: #bc6c25 !important;
-        text-align: center;
-        font-weight: 700;
-        font-size: 3rem !important;
-        text-shadow: 2px 2px 0px #fefae0, 4px 4px 8px rgba(188, 108, 37, 0.2);
-        margin-bottom: 0px !important;
-    }
-    
-    /* 서브 캡션 */
-    .stCaption {
-        text-align: center !important;
-        color: #606c38 !important;
-        font-size: 1.3rem !important;
-        margin-bottom: 15px !important;
-        font-weight: 700;
-    }
-
-    /* 채팅 입력창: 몽글몽글한 알약 형태 & 손글씨 */
-    .stChatInputContainer {
-        background-color: transparent !important;
-        padding-bottom: 20px;
-    }
-    .stChatInput input {
-        color: #283618 !important;
-        background-color: #ffffff !important;
-        border-radius: 25px !important;
-        border: 3px solid #dda15e !important;
-        font-family: 'Gaegu', cursive, sans-serif !important;
-        font-size: 20px !important;
-    }
-    
-    /* 사용자 채팅 말풍선: 몽글몽글한 유기형 곡선 박스 */
-    div[data-testid="stChatMessage"]:nth-child(odd) {
-        background-color: #faedcd !important;
-        border-radius: 25px 30px 20px 35px !important;
-        padding: 15px !important;
-        border: 2px dashed #dda15e !important;
-        box-shadow: 2px 4px 10px rgba(0,0,0,0.03);
-    }
-
-    /* AI(미래의 나) 채팅 말풍선: 싱그러운 초록빛 몽글이 박스 */
-    div[data-testid="stChatMessage"]:nth-child(even) {
-        background-color: #e9edc9 !important;
-        border-radius: 30px 25px 35px 20px !important;
-        padding: 15px !important;
-        border: 2px dashed #606c38 !important;
-        box-shadow: 2px 4px 10px rgba(0,0,0,0.03);
-    }
-
-    /* 여백 조절 및 중앙 정렬 최적화 */
-    .block-container {
-        padding-top: 2rem !important;
-        padding-bottom: 2rem !important;
-        max-width: 700px !important;
-    }
-
-    /* 알림/에러 박스 둥글게 */
-    div.stAlert {
-        background-color: #fefae0 !important;
-        border: 2px solid #dda15e !important;
-        color: #283618 !important;
-        border-radius: 20px !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# 상단 아기자기한 일러스트 포인트 헤더
+# 상단 감성 포인트 타이틀
 st.markdown(
     "<div style='text-align: center; font-size: 1.5rem;'>🌱 ☁️ 🍃 📮 🍃 ☁️"
     " 🌱</div>",
@@ -142,7 +54,7 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# 사용자 입력 받기
+# 사용자 입력 받기 (오류 없는 깔끔한 기본 입력창)
 if prompt := st.chat_input("오늘 어떤 마음으로 하루를 보내셨나요? 편하게 적어보세요."):
     # 사용자 메시지 추가
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -164,11 +76,9 @@ if prompt := st.chat_input("오늘 어떤 마음으로 하루를 보내셨나요
                         )
                     )
 
-                # API 호출
+                # API 호출 (최신 gemini-3.6-flash 모델 적용)
                 response = client.models.generate_content(
-                    model="geminit-3.6-flash"
-                    if False
-                    else "gemini-3.6-flash",  # 안전한 모델명 유지
+                    model="gemini-3.6-flash",
                     contents=contents,
                     config=types.GenerateContentConfig(
                         system_instruction=system_instruction,

@@ -15,7 +15,7 @@ st.caption(
     "10년 뒤 산전수전 다 겪은 미래의 내가 뼈 때리는 조언과 위로를 건네줍니다."
 )
 
-# 🔒 [보안 적용] Streamlit의 안전한 비밀 금고(Secrets)에서 API Key를 불러옵니다.
+# 🔒 Streamlit Secrets에서 안전하게 API Key 불러오기
 try:
     API_KEY = st.secrets["GEMINI_API_KEY"]
 except Exception:
@@ -72,9 +72,9 @@ if prompt := st.chat_input("요즘 어떤 고민이 있어? 편하게 털어놔�
                         )
                     )
 
-                # API 호출 (안정적인 플래시 모델 사용)
+                # API 호출 (최신 gemini-3.6-flash 모델 적용)
                 response = client.models.generate_content(
-                    model="gemini-2.5-flash",
+                    model="gemini-3.6-flash",
                     contents=contents,
                     config=types.GenerateContentConfig(
                         system_instruction=system_instruction,

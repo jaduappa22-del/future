@@ -79,9 +79,9 @@ if prompt := st.chat_input("요즘 어떤 고민이 있어? 편하게 털어놔�
                         )
                     )
 
-                # 최신 SDK 방식으로 API 호출 (gemini-2.5-flash 모델 사용)
+                # 최신 SDK 방식으로 API 호출 (모델명 gemini-3.6-flash 적용)
                 response = client.models.generate_content(
-                    model="gemini-2.5-flash",
+                    model="gemini-3.6-flash",
                     contents=contents,
                     config=types.GenerateContentConfig(
                         system_instruction=system_instruction,

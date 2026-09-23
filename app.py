@@ -6,81 +6,103 @@ from google.genai import types
 # 페이지 설정
 st.set_page_config(
     page_title="2036 타임리프: 10년 뒤의 나",
-    page_icon="🌿",
+    page_icon="📮",
     layout="centered",
 )
 
-# 🍃 [지브리 감성 스튜디오 스타일 커스텀 CSS 디자인]
+# 🌿 [지브리 감성 손글씨 & 몽글몽글 유기농 디자인 적용]
 st.markdown(
     """
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
     <style>
-    /* 전체 배경: 따뜻하고 부드러운 크림/베이지 톤 */
+    /* 전체 배경: 포근하고 따뜻한 크림/연두 톤 */
     .stApp {
-        background: linear-gradient(180deg, #fefae0 0%, #faedcd 100%);
+        background: linear-gradient(135deg, #fefae0 0%, #faedcd 50%, #e9edc9 100%);
         color: #283618;
-        font-family: 'Malgun Gothic', sans-serif;
+        font-family: 'Gaegu', cursive, sans-serif !important;
     }
     
-    /* 메인 타이틀: 싱그러운 초록빛과 따뜻한 감성 */
+    /* 폰트 전체 적용 및 큼직하게 손글씨 느낌 살리기 */
+    html, body, [class*="css"] {
+        font-family: 'Gaegu', cursive, sans-serif !important;
+        font-size: 22px !important;
+    }
+    
+    /* 메인 타이틀: 몽글몽글한 입체 효과 */
     h1 {
-        font-family: 'Malgun Gothic', sans-serif;
-        color: #283618;
+        font-family: 'Gaegu', cursive, sans-serif !important;
+        color: #bc6c25;
         text-align: center;
-        font-weight: 800;
-        font-size: 2.5rem !important;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+        font-weight: 700;
+        font-size: 3.2rem !important;
+        text-shadow: 2px 2px 0px #fefae0, 4px 4px 10px rgba(188, 108, 37, 0.2);
+        margin-bottom: 0rem;
     }
     
-    /* 서브 캡션 스타일 */
+    /* 서브 캡션 (여백 줄이기) */
     .stCaption {
         text-align: center;
         color: #606c38 !important;
-        font-size: 1.1rem !important;
-        margin-bottom: 2rem;
-        font-weight: 600;
+        font-size: 1.3rem !important;
+        margin-bottom: 1rem;
+        font-weight: 700;
     }
 
-    /* 채팅 입력창 텍스트가 잘 보이도록 수정 (핵심 해결!) */
+    /* 채팅 입력창: 몽글몽글한 알약 형태 & 손글씨 */
     .stChatInput input {
         color: #283618 !important;
         background-color: #ffffff !important;
-        border-radius: 12px !important;
-        border: 2px solid #dda15e !important;
+        border-radius: 25px !important;
+        border: 3px solid #dda15e !important;
+        font-family: 'Gaegu', cursive, sans-serif !important;
+        font-size: 20px !important;
     }
     
-    /* 사용자 채팅 말풍선: 따뜻한 우드/베이지 톤 */
+    /* 사용자 채팅 말풍선: 몽글몽글한 유기형 곡선 박스 */
     div[data-testid="stChatMessage"]:nth-child(odd) {
         background-color: #faedcd;
-        border-radius: 15px;
-        padding: 10px;
-        border: 1px solid #dda15e;
+        border-radius: 25px 30px 20px 35px;
+        padding: 12px;
+        border: 2px dashed #dda15e;
+        box-shadow: 2px 4px 10px rgba(0,0,0,0.03);
     }
 
-    /* AI(미래의 나) 채팅 말풍선: 싱그러운 숲속 톤 */
+    /* AI(미래의 나) 채팅 말풍선: 싱그러운 초록빛 몽글이 박스 */
     div[data-testid="stChatMessage"]:nth-child(even) {
         background-color: #e9edc9;
-        border-radius: 15px;
-        padding: 10px;
-        border: 1px solid #ccd5ae;
+        border-radius: 30px 25px 35px 20px;
+        padding: 12px;
+        border: 2px dashed #606c38;
+        box-shadow: 2px 4px 10px rgba(0,0,0,0.03);
     }
 
-    /* 알림/에러 박스 디자인 */
+    /* 여백(Spacing)을 촘촘하게 줄여서 휑한 느낌 없애기 */
+    .block-container {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+        max-width: 700px;
+    }
+
+    /* 알림/에러 박스도 둥글게 */
     div.stAlert {
         background-color: #fefae0;
-        border: 1px solid #dda15e;
+        border: 2px solid #dda15e;
         color: #283618;
-        border-radius: 12px;
+        border-radius: 20px;
     }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-# 타이틀 및 헤더
-st.title("🌿 2036년의 초원에서 온 편지")
-st.caption(
-    "🍃 바람결에 실려 온 10년 뒤의 나이브한 잔소리와 따뜻한 위로"
+# 상단 아기자기한 일러스트 포인트 헤더
+st.markdown(
+    "<div style='text-align: center; font-size: 1.5rem;'>🌱 ☁️ 🍃 📮 🍃 ☁️"
+    " 🌱</div>",
+    unsafe_allow_html=True,
 )
+st.title("2036년의 초원에서 온 편지")
+st.caption("바람결에 실려 온 10년 뒤의 나이브한 잔소리와 따뜻한 위로")
 
 # 🔒 Streamlit Secrets에서 안전하게 API Key 불러오기
 try:
@@ -117,7 +139,7 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# 사용자 입력 받기 (글씨가 잘 보이도록 수정됨)
+# 사용자 입력 받기
 if prompt := st.chat_input("오늘 어떤 마음으로 하루를 보내셨나요? 편하게 적어보세요."):
     # 사용자 메시지 추가
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -126,7 +148,7 @@ if prompt := st.chat_input("오늘 어떤 마음으로 하루를 보내셨나요
 
     # AI 응답 생성
     with st.chat_message("assistant"):
-        with st.spinner("🍃 10년 뒤의 초원에서 답장을 적는 중..."):
+        with st.spinner("🍃 10년 뒤의 초원에서 편지를 쓰는 중..."):
             try:
                 # 대화 히스토리 구성
                 contents = []
